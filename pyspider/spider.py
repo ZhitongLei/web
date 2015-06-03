@@ -3,9 +3,9 @@
 import urllib2 as http # http
 
 REQUEST_TIMEOUT = 10
-PAGE_DECODE = 'utf8'
+PAGE_DECODE = 'utf-8'
 
-class SpiderRequest:
+class RequestInfo:
 	def __init__(self, url, data = None, headers = {}):
 		self.url = url
 		self.data = data
@@ -23,8 +23,8 @@ class Spider:
 		self.set_timeout(timeout)
 		self.page_decode = PAGE_DECODE
 
-	def request(self, spider_request):
-		request = http.Request(spider_request.url, spider_request.data, spider_request.headers)
+	def request(self, request_info):
+		request = http.Request(request_info.url, request_info.data, request_info.headers)
 		try:
 			response = http.urlopen(request)
 		except http.URLError, e:
@@ -44,12 +44,12 @@ if __name__ == '__main__':
  	USER_AGENT = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
   	HTTP_HEADER = { 'User-Agent' : USER_AGENT }
 
-	request = SpiderRequest(zhihu_lasest_news_url) 
-	request.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)')
+	request_info = RequestInfo(zhihu_lasest_news_url) 
+	request_info.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)')
 
 
 	spider = Spider()
-	response = spider.request(request)
+	response = spider.request(request_info)
 	if response:
 		print(response)
 
