@@ -3,7 +3,7 @@
 import urllib2 as http # http
 
 REQUEST_TIMEOUT = 10
-PAGE_DECODE = 'utf-8'
+PAGE_DECODE = 'utf8'
 
 class RequestInfo:
 	def __init__(self, url, data = None, headers = {}):
@@ -18,7 +18,7 @@ class RequestInfo:
 		self.headers[key] = value
 
 
-class Spider:
+class Fetcher:
 	def __init__(self, timeout = REQUEST_TIMEOUT, page_decode = PAGE_DECODE):
 		self.set_timeout(timeout)
 		self.page_decode = PAGE_DECODE
@@ -48,8 +48,8 @@ if __name__ == '__main__':
 	request_info.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)')
 
 
-	spider = Spider()
-	response = spider.request(request_info)
+	fetcher = Fetcher()
+	response = fetcher.request(request_info)
 	if response:
 		print(response)
 
