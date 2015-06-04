@@ -20,7 +20,8 @@ class Spider:
 
 		while not url_queue.empty():
 			curr_url, depth = url_queue.get()		
-			print 'url=%s, depth=%d' % (curr_url, depth)
+			#print 'url=%s, depth=%d' % (curr_url, depth)
+			print curr_url
 
 			if depth > self.depth_limit:
 				continue
@@ -32,7 +33,7 @@ class Spider:
 			## parse page
 			## Content.parse(page_content)
 
-			url_list = HtmlParser.extract_url(page_content)
+			url_list = HtmlParser.extract_url(curr_url, page_content)
 			if url_list:
 				for url in url_list:
 					url_queue.put((url, depth))
@@ -40,8 +41,9 @@ class Spider:
 
 if __name__ == '__main__':
 	init_url = 'http://zhihu.com'
+	init_url = 'https://baidu.com'
 	request = RequestInfo(init_url) 
 	request.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)')
 
-	spider = Spider(request, 0)
+	spider = Spider(request, 1)
 	spider.start()

@@ -3,7 +3,7 @@
 import urllib2 as http # http
 
 REQUEST_TIMEOUT = 10
-PAGE_DECODE = 'utf8'
+PAGE_DECODE = 'utf-8'
 
 class RequestInfo:
 	def __init__(self, url, data = None, headers = {}):
@@ -30,10 +30,12 @@ class Fetcher:
 		except http.URLError, e:
 		 	if hasattr(e, 'code'):
 				print('Error code: ', e.code)
+				return ''
 			elif hasattr(e, 'reason'):
 				print('Fail to reach server, reason: ', e.reason)
+				return ''
 		else:
-			return response.read().decode(self.page_decode)
+			return response.read().decode(self.page_decode, 'ignore')
 		
 	def set_timeout(self, timeout):
 		http.socket.setdefaulttimeout(timeout)
