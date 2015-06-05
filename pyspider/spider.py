@@ -41,9 +41,9 @@ class Spider:
 
 if __name__ == '__main__':
 	init_url = 'http://zhihu.com'
-	init_url = 'https://baidu.com'
+#init_url = 'http://cnblogs.com'
 	request = RequestInfo(init_url) 
 	request.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)')
 
-	spider = Spider(request, 1)
+	spider = Spider(request, 0)
 	spider.start()

@@ -29,13 +29,22 @@ class Fetcher:
 			response = http.urlopen(request)
 		except http.URLError, e:
 		 	if hasattr(e, 'code'):
-				print('Error code: ', e.code)
+				print('Error|Fetcher.request|error code: ', e.code)
 				return ''
 			elif hasattr(e, 'reason'):
-				print('Fail to reach server, reason: ', e.reason)
+				print('Error|Fetcher.request|fail to reach server, reason: ', e.reason)
 				return ''
+		except ValueError, e: 
+		  	print('Error|Fetcher.return|%s') % e
+		  	return ''
 		else:
-			return response.read().decode(self.page_decode, 'ignore')
+		  	page_type = response.info().gettype()
+
+		  	if page_type != 'text/html':
+				print('Info|Fetcher.request|skip url:%s, type:%s') % (request_info.url, page_type)
+				return ''
+			else:
+				return response.read().decode(self.page_decode, 'ignore')
 		
 	def set_timeout(self, timeout):
 		http.socket.setdefaulttimeout(timeout)
